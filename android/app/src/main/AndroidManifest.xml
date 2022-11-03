@@ -4,6 +4,8 @@
         android:label="places_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCzl2lhm9VBfrHo4NohSt-B3-hif6PGWUw"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -29,6 +31,6 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
-            android:value="2" />
+            android:value="2"/>
     </application>
 </manifest>
