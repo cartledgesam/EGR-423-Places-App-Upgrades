@@ -18,11 +18,18 @@ class _ImageInputState extends State<ImageInput> {
   XFile _storedImage;
 
   Future<void> _takePicture() async {
+    ImageSource source;
+    if (Platform.isAndroid) {
+      source = ImageSource.camera;
+    } else if (Platform.isIOS) {
+      source = ImageSource.gallery;
+    }
     final picker = ImagePicker();
     final imageFile = await picker.pickImage(
-      source: ImageSource.gallery,
+      source: source,
       maxWidth: 600,
     );
+
     if (imageFile == null) {
       return;
     }
