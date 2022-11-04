@@ -30,6 +30,7 @@ dependencies:
   sqflite: ^2.1.0+1
   location: ^4.4.0
   google_maps_flutter: ^2.2.1
+  confetti: ^0.7.0
   local_auth: ^2.1.2
 
 
