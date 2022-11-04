@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import '../widgets/image_input.dart';
 import '../widgets/location_input.dart';
 import '../providers/great_places.dart';
-import '../models/place.dart';
 import './places_list_screen.dart';
+import '../models/place.dart';
 import '../widgets/hidden.dart';
 
 class AddPlaceScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
       return;
     }
     Provider.of<GreatPlaces>(context, listen: false)
-        .addPlace(_titleController.text, _pickedImage, _pickedLocation);
+        .addPlace(_titleController.text, _pickedImage, _pickedLocation, hidden);
     Provider.of<PlacesListScreenState>(context, listen: false)
         .shootConfetti(); // where the confetti is called
     Navigator.of(context).pop();
@@ -51,35 +51,29 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Scaffold(
-          appBar: AppBar(
-            title: Text('Add a New Place'),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: <Widget>[
-                        TextField(
-                          decoration: InputDecoration(labelText: 'Title'),
-                          controller: _titleController,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ImageInput(_selectImage),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        LocationInput(_selectPlace),
-                      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add a New Place'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                      controller: _titleController,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ImageInput(_selectImage),
+                    SizedBox(
+                      height: 10,
                     ),
                     LocationInput(_selectPlace),
                     SizedBox(
@@ -103,8 +97,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
               elevation: 0,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
