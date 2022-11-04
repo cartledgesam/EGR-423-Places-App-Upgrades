@@ -8,6 +8,7 @@ import '../widgets/location_input.dart';
 import '../providers/great_places.dart';
 import '../models/place.dart';
 import './places_list_screen.dart';
+import '../widgets/hidden.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/add-place';
@@ -20,9 +21,15 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
   File _pickedImage;
   PlaceLocation _pickedLocation;
+  bool hidden = false;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
+  }
+
+  void _hidden(bool isHidden) {
+    hidden = isHidden;
+    //debugPrint(hidden.toString());
   }
 
   void _selectPlace(double lat, double lng) {
@@ -74,25 +81,27 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                         LocationInput(_selectPlace),
                       ],
                     ),
-                  ),
+                    LocationInput(_selectPlace),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    HiddenInput(_hidden),
+                  ],
                 ),
               ),
-              ElevatedButton.icon(
-                icon: Icon(Icons.add),
-                label: Text('Add Place'),
-                onPressed: _savePlace,
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.teal,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onPrimary: Theme.of(context).accentColor,
-                  shadowColor: Colors.red,
-                  elevation: 0,
-                ),
-                //elevation: 0,
-                //materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                //color: Theme.of(context).accentColor,
-              ),
-            ],
+            ),
+          ),
+          ElevatedButton.icon(
+            icon: Icon(Icons.add),
+            label: Text('Add Place'),
+            onPressed: _savePlace,
+            style: ElevatedButton.styleFrom(
+              primary: Colors.teal,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              onPrimary: Theme.of(context).accentColor,
+              shadowColor: Colors.red,
+              elevation: 0,
+            ),
           ),
         ),
       ],

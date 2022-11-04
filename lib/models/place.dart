@@ -19,11 +19,13 @@ class Place {
   final String title;
   final PlaceLocation location;
   final File image;
+  final bool hidden;
 
   Place({
     @required this.id,
     @required this.title,
     @required this.location,
     @required this.image,
+    @required this.hidden,
   });
 }
