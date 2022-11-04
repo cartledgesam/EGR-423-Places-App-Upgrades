@@ -11,9 +11,15 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: GreatPlaces(),
-      child: MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: PlacesListScreenState(),
+        ),
+      ],
+      child: ChangeNotifierProvider.value(
+        value: GreatPlaces(),
+        child: MaterialApp(
           title: 'Great Places',
           theme: ThemeData(
             primarySwatch: Colors.indigo,
@@ -23,7 +29,9 @@ class MyApp extends StatelessWidget {
           routes: {
             AddPlaceScreen.routeName: (ctx) => AddPlaceScreen(),
             PlaceDetailScreen.routeName: (ctx) => PlaceDetailScreen(),
-          }),
+          },
+        ),
+      ),
     );
   }
 }

@@ -7,6 +7,7 @@ import '../widgets/image_input.dart';
 import '../widgets/location_input.dart';
 import '../providers/great_places.dart';
 import '../models/place.dart';
+import './places_list_screen.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/add-place';
@@ -36,58 +37,65 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     }
     Provider.of<GreatPlaces>(context, listen: false)
         .addPlace(_titleController.text, _pickedImage, _pickedLocation);
+    Provider.of<PlacesListScreenState>(context, listen: false)
+        .shootConfetti(); // where the confetti is called
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add a New Place'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
-                      controller: _titleController,
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Scaffold(
+          appBar: AppBar(
+            title: Text('Add a New Place'),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        TextField(
+                          decoration: InputDecoration(labelText: 'Title'),
+                          controller: _titleController,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ImageInput(_selectImage),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        LocationInput(_selectPlace),
+                      ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ImageInput(_selectImage),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    LocationInput(_selectPlace),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              ElevatedButton.icon(
+                icon: Icon(Icons.add),
+                label: Text('Add Place'),
+                onPressed: _savePlace,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.teal,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onPrimary: Theme.of(context).accentColor,
+                  shadowColor: Colors.red,
+                  elevation: 0,
+                ),
+                //elevation: 0,
+                //materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                //color: Theme.of(context).accentColor,
+              ),
+            ],
           ),
-          ElevatedButton.icon(
-            icon: Icon(Icons.add),
-            label: Text('Add Place'),
-            onPressed: _savePlace,
-            style: ElevatedButton.styleFrom(
-              primary: Colors.teal,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              onPrimary: Theme.of(context).accentColor,
-              shadowColor: Colors.red,
-              elevation: 0,
-            ),
-            //elevation: 0,
-            //materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //color: Theme.of(context).accentColor,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
