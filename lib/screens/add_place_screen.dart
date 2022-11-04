@@ -7,6 +7,7 @@ import '../widgets/image_input.dart';
 import '../widgets/location_input.dart';
 import '../providers/great_places.dart';
 import '../models/place.dart';
+import '../widgets/hidden.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/add-place';
@@ -19,9 +20,15 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
   File _pickedImage;
   PlaceLocation _pickedLocation;
+  bool hidden = false;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
+  }
+
+  void _hidden(bool isHidden) {
+    hidden = isHidden;
+    //debugPrint(hidden.toString());
   }
 
   void _selectPlace(double lat, double lng) {
@@ -35,7 +42,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
       return;
     }
     Provider.of<GreatPlaces>(context, listen: false)
-        .addPlace(_titleController.text, _pickedImage, _pickedLocation);
+        .addPlace(_titleController.text, _pickedImage, _pickedLocation, hidden);
     Navigator.of(context).pop();
   }
 
@@ -66,6 +73,10 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                       height: 10,
                     ),
                     LocationInput(_selectPlace),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    HiddenInput(_hidden),
                   ],
                 ),
               ),
@@ -82,9 +93,6 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
               shadowColor: Colors.red,
               elevation: 0,
             ),
-            //elevation: 0,
-            //materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //color: Theme.of(context).accentColor,
           ),
         ],
       ),

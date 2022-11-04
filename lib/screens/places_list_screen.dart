@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import './add_place_screen.dart';
@@ -8,6 +9,7 @@ import './place_detail_screen.dart';
 class PlacesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //checkAuth();
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Places'),
@@ -36,22 +38,34 @@ class PlacesListScreen extends StatelessWidget {
                     ? ch
                     : ListView.builder(
                         itemCount: greatPlaces.items.length,
-                        itemBuilder: (ctx, i) => ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: FileImage(
-                                  greatPlaces.items[i].image,
+                        itemBuilder: (ctx, i) => greatPlaces.items[i].hidden
+                            ? ListTile(
+                                leading: Icon(Icons.hide_image, size: 45),
+                                title: Text("Hidden"),
+                                subtitle: Text("Tap to authenticate"),
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    PlaceDetailScreen.routeName,
+                                    arguments: greatPlaces.items[i].id,
+                                  );
+                                },
+                              )
+                            : ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage: FileImage(
+                                    greatPlaces.items[i].image,
+                                  ),
                                 ),
+                                title: Text(greatPlaces.items[i].title),
+                                subtitle:
+                                    Text(greatPlaces.items[i].location.address),
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    PlaceDetailScreen.routeName,
+                                    arguments: greatPlaces.items[i].id,
+                                  );
+                                },
                               ),
-                              title: Text(greatPlaces.items[i].title),
-                              subtitle:
-                                  Text(greatPlaces.items[i].location.address),
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  PlaceDetailScreen.routeName,
-                                  arguments: greatPlaces.items[i].id,
-                                );
-                              },
-                            ),
                       ),
               ),
       ),

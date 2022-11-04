@@ -21,6 +21,7 @@ class GreatPlaces with ChangeNotifier {
     String pickedTitle,
     File pickedImage,
     PlaceLocation pickedLocation,
+    bool hidden,
   ) async {
     final address = await LocationHelper.getPlaceAddress(
         pickedLocation.latitude, pickedLocation.longitude);
@@ -34,6 +35,7 @@ class GreatPlaces with ChangeNotifier {
       image: pickedImage,
       title: pickedTitle,
       location: updatedLocation,
+      hidden: hidden,
     );
     _items.add(newPlace);
     notifyListeners();
@@ -44,6 +46,7 @@ class GreatPlaces with ChangeNotifier {
       'loc_lat': newPlace.location.latitude,
       'loc_lng': newPlace.location.longitude,
       'address': newPlace.location.address,
+      'hidden': newPlace.hidden.toString(),
     });
   }
 
@@ -52,15 +55,16 @@ class GreatPlaces with ChangeNotifier {
     _items = dataList
         .map(
           (item) => Place(
-                id: item['id'],
-                title: item['title'],
-                image: File(item['image']),
-                location: PlaceLocation(
-                  latitude: item['loc_lat'],
-                  longitude: item['loc_lng'],
-                  address: item['address'],
-                ),
-              ),
+            id: item['id'],
+            title: item['title'],
+            image: File(item['image']),
+            location: PlaceLocation(
+              latitude: item['loc_lat'],
+              longitude: item['loc_lng'],
+              address: item['address'],
+            ),
+            hidden: item['hidden'].toLowerCase() == 'true',
+          ),
         )
         .toList();
     notifyListeners();
