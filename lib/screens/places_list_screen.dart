@@ -56,49 +56,41 @@ class PlacesListScreenState extends State<PlacesListScreen>
                       child:
                           const Text('Got no places yet, start adding some!'),
                     ),
-                    builder: (ctx, greatPlaces, ch) =>
-                        greatPlaces.items.length <= 0
-                            ? ch
-                            : ListView.builder(
-                                itemCount: greatPlaces.items.length,
-                                itemBuilder: (ctx, i) => greatPlaces.items[i].hidden
-                            ? ListTile(
-                                leading: Icon(Icons.hide_image, size: 45),
-                                title: Text("Hidden"),
-                                subtitle: Text("Tap to authenticate"),
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    PlaceDetailScreen.routeName,
-                                    arguments: greatPlaces.items[i].id,
-                                  );
-                                },
-                              )
-                            : ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: FileImage(
-                                    greatPlaces.items[i].image,
+                    builder: (ctx, greatPlaces, ch) => greatPlaces
+                                .items.length <=
+                            0
+                        ? ch
+                        : ListView.builder(
+                            itemCount: greatPlaces.items.length,
+                            itemBuilder: (ctx, i) => greatPlaces.items[i].hidden
+                                ? ListTile(
+                                    leading: Icon(Icons.hide_image, size: 45),
+                                    title: Text("Hidden"),
+                                    subtitle: Text("Tap to authenticate"),
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        PlaceDetailScreen.routeName,
+                                        arguments: greatPlaces.items[i].id,
+                                      );
+                                    },
+                                  )
+                                : ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundImage: FileImage(
+                                        greatPlaces.items[i].image,
+                                      ),
+                                    ),
+                                    title: Text(greatPlaces.items[i].title),
+                                    subtitle: Text(
+                                        greatPlaces.items[i].location.address),
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        PlaceDetailScreen.routeName,
+                                        arguments: greatPlaces.items[i].id,
+                                      );
+                                    },
                                   ),
-                                  title: Text(greatPlaces.items[i].title),
-                                  subtitle: Text(
-                                      greatPlaces.items[i].location.address),
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                      PlaceDetailScreen.routeName,
-                                      arguments: greatPlaces.items[i].id,
-                                    );
-                                  },
-
-                                ),
-                                title: Text(greatPlaces.items[i].title),
-                                subtitle:
-                                    Text(greatPlaces.items[i].location.address),
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    PlaceDetailScreen.routeName,
-                                    arguments: greatPlaces.items[i].id,
-                                  );
-                                },
-                              ),
+                          ),
                   ),
           ),
         ),
